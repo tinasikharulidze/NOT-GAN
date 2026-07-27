@@ -1,0 +1,24 @@
+[project]
+name = "NOT-GAN"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "graphviz>=0.21",
+    "ipykernel>=7.2.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.3",
+    "open-clip-torch>=3.3.0",
+    "pandas>=3.0.1",
+    "pillow>=12.1.1",
+    "pypdf>=6.13.2",
+    "scipy>=1.17.1",
+    "seaborn>=0.13.2",
+    "tensorboard>=2.20.0",
+    "torch>=2.11.0",
+    "torchview>=0.2.7",
+    "torchvision>=0.26.0",
+    "torchviz>=0.0.3",
+    "tqdm>=4.67.3",
+]
