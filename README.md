@@ -166,7 +166,7 @@ experiment; everything reusable comes from `src/`.
   notebook as given; see `MIGRATION_NOTES.md` if that matters to you.
 
 - **`CartoonSet_Preprocessing.ipynb`** — run this before
-  `CartoonSet_Training.ipynb`. Loads the CartoonSet attribute CSVs,
+  `CartoonSet_Experiment.ipynb`. Loads the CartoonSet attribute CSVs,
   generates captions, fine-tunes CLIP, and precomputes an image embedding
   for every image. Produces three files the training notebook needs:
   `cartoon_with_embeddings.csv`, `cartoon_clip_embeddings.npy`, and
