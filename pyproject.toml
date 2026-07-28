@@ -12,6 +12,7 @@ dependencies = [
     "open-clip-torch>=3.3.0",
     "pandas>=3.0.1",
     "pillow>=12.1.1",
+    "pot>=0.9.7",
     "pypdf>=6.13.2",
     "scipy>=1.17.1",
     "seaborn>=0.13.2",

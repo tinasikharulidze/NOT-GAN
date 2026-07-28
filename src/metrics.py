@@ -156,40 +156,38 @@ def w2_to_target(fake, real, reg=0.5, max_n=500):
 # CartoonSet experiment -- CLIP embedding quality checks
 # ============================================================================
 
-def precompute_embeddings(df, model, preprocess, save_path='cartoon_clip_embeddings.npy',
-                           batch_size=256, device='cuda'):
-    """Runs the fine-tuned image encoder over every image once and saves the
-    result to disk -- so GAN training never needs a CLIP forward pass, just
-    an array lookup by row position.
+def precompute_text_embeddings(df, model, tokenizer, save_path='cartoon_clip_text_embeddings.npy',
+                                text_col='clip_text_description', batch_size=256, device='cuda'):
+    """Runs the fine-tuned text encoder over every caption once and saves the
+    result to disk.
 
     Returns: np.ndarray, shape [N, 512], L2-normalized.
     """
     import torch.nn.functional as F
     from torch.utils.data import Dataset, DataLoader
-    from PIL import Image
     from tqdm import tqdm
 
     model.eval()
 
-    class _ImgDataset(Dataset):
-        def __init__(self, paths, transform):
-            self.paths = paths
-            self.transform = transform
+    class _TextDataset(Dataset):                       
+        def __init__(self, captions):
+            self.captions = captions
 
         def __len__(self):
-            return len(self.paths)
+            return len(self.captions)
 
         def __getitem__(self, i):
-            return self.transform(Image.open(self.paths[i]).convert('RGB'))
+            return self.captions[i]                     
 
-    loader = DataLoader(_ImgDataset(df['img_path'].tolist(), preprocess),
+    loader = DataLoader(_TextDataset(df[text_col].tolist()),
                          batch_size=batch_size, shuffle=False,
-                         num_workers=2, pin_memory=True)
+                         num_workers=0)                 
 
     all_embs = []
     with torch.no_grad():
-        for imgs in tqdm(loader, desc="Pre-computing embeddings"):
-            emb = model.encode_image(imgs.to(device))
+        for captions in tqdm(loader, desc="Pre-computing text embeddings"):
+            tokens = tokenizer(list(captions)).to(device)    # tokenize instead of imgs.to(device)
+            emb = model.encode_text(tokens)                  
             emb = F.normalize(emb, dim=-1)
             all_embs.append(emb.cpu().numpy())
 
@@ -197,7 +195,6 @@ def precompute_embeddings(df, model, preprocess, save_path='cartoon_clip_embeddi
     np.save(save_path, embeddings)
     print(f"Saved {embeddings.shape}  dtype={embeddings.dtype}  -> {save_path}")
     return embeddings
-
 
 def check_gap(df, model, preprocess, device='cuda', n=50):
     """Blonde-vs-dark-brown embedding similarity gap: a quick, fixed
