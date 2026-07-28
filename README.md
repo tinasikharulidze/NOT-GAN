@@ -153,7 +153,7 @@ experiment; everything reusable comes from `src/`.
   optimizer, noise level, batch size) each as its own section, and ends
   with a results table.
 
-- **`MNIST_Training.ipynb`** — the largest notebook, organized into
+- **`MNIST_Experiment.ipynb`** — the largest notebook, organized into
   sections mirroring the thesis's experimental progression: **Model A**
   (early anchoring ablations), **Model B** (the final unconditional model,
   culminating in the FID-20.3 run), **Model C** (class-conditional), and
@@ -172,7 +172,7 @@ experiment; everything reusable comes from `src/`.
   `cartoon_with_embeddings.csv`, `cartoon_clip_embeddings.npy`, and
   `clip_cartoon_finetuned.pt`.
 
-- **`CartoonSet_Training.ipynb`** — loads those three files, sanity-checks
+- **`CartoonSet_Experiment.ipynb`** — loads those three files, sanity-checks
   each architecture variant, and launches the actual training runs (E19,
   E20, E21 — all using the fully-injected architecture). **Requires a CUDA
   GPU**: training wraps the models in `nn.DataParallel` and doesn't fall
