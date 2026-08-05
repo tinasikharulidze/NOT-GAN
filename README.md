@@ -133,7 +133,7 @@ particular to one setting.
   randomization is what lets the fine-tuned CLIP encoder generalize to the
   many different ways a real user might phrase the same request.
 
-## `notebooks/` — one per experiment
+## `notebooks/` (one per experiment)
 
 Each notebook holds only the setup and orchestration specific to that
 experiment; everything reusable comes from `src/`.
